@@ -1,5 +1,4 @@
 # jQuery.MediaSelect
 
-管理画面で画像とかを選択してURを挿入します。
-
-jQuery.MediaSelect
+管理画面で画像を選択してテキストエリアなどにURLを挿入します。
+CodeMirrorに対応しています。
