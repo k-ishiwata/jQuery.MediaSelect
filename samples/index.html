@@ -7,13 +7,61 @@
 	<link href="css/codemirror.css" media="all" rel="stylesheet" type="text/css" />
 	<link href="css/admin.css" media="all" rel="stylesheet" type="text/css" />
 	<script src="js/jquery-1.7.1.min.js" type="text/javascript"></script>
-	<script src="js/admin.js" type="text/javascript"></script>
 	<script src="js/codemirror/codemirror.js" type="text/javascript"></script>
 	<script src="js/codemirror/zen_codemirror.min.js" type="text/javascript"></script>
 	<script src="js/codemirror/util/closetag.js" type="text/javascript"></script>
 	<script src="js/codemirror/mode/htmlmixed/htmlmixed.js" type="text/javascript"></script>
 	<script src="js/codemirror/mode/xml/xml.js" type="text/javascript"></script>
 	<script src="../mediaselect.js" type="text/javascript"></script>
+	<script type="text/javascript">
+	$(function() {
+		if (document.getElementById("editor")) {
+			//テキストエリアカスタマイズ（CodeMirror）
+			var meditor = CodeMirror.fromTextArea(document.getElementById("editor"), {
+				mode: 'text/html',
+				tabMode: "indent",
+				indentUnit: 4,	//インデントサイズ
+				enterMode: "keep",
+				lineNumbers: true,
+				lineWrapping: true,
+				indentWithTabs: true,
+	
+				extraKeys: {
+					"'>'": function(cm) { cm.closeTag(cm, '>'); },
+					"'/'": function(cm) { cm.closeTag(cm, '/'); }
+				},
+	
+				//アクティブ行をハイライト
+				onCursorActivity: function() {
+					meditor.setLineClass(hlLine, null, null);
+					hlLine = meditor.setLineClass(meditor.getCursor().line, null, "activeline");
+				},
+	
+				// send all key events to Zen Coding
+				onKeyEvent: function() {
+					return zen_editor.handleKeyEvent.apply(zen_editor, arguments);
+				},
+				wordWrap: true
+			});
+			var hlLine = meditor.setLineClass(0, "activeline");
+		}
+		CodeMirror.commands["selectAll"](meditor);
+	
+		//メディアセレクトウインドウ
+		$('#mediaBtn').mediaSelect({
+			insertObj: meditor
+		});
+	
+		$('#thum-insert-btn').mediaSelect({
+			insertObj: '#thum-field'
+		});
+	
+		$('#disc-insert-btn').mediaSelect({
+			insertObj: '#disc-textarea'
+		});
+	
+	});
+	</script>
 </head>
 <body>
 <div id="wrap">
