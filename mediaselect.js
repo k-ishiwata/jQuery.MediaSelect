@@ -2,7 +2,7 @@
  * jquery.mediaSelect.js
  *
  * @version  0.1.0
- * @author   k-ishiwata
+ * @author   k.ishiwata
  * @url     http://www.webopixel.net/
  * @license  http://rewish.org/license/mit The MIT License
  *
@@ -16,13 +16,11 @@
 		this.opts = $.extend({},$.wop.mediaSelect.defaults,option);
 		var self = this;
 		var ele = targets;
-
-	//ボタンクリックしたらWindow表示
-	ele.click(function(e){
-	    e.preventDefault();
-	    self.openModal();
-	});
-
+		//ボタンクリックしたらWindow表示
+		ele.click(function(e){
+		    e.preventDefault();
+		    self.openModal();
+		});
 	};
 	$.wop.mediaSelect.prototype = {
 		openModal : function() {
@@ -33,12 +31,12 @@
 			$('body').append('<div class="media-modal">'+
 			  '<div class="modal-header">'+
 			  '<a class="close" data-dismiss="modal">×</a>'+
-			  '<h3>画像一覧</h3>'+
+			  '<h3>Media List</h3>'+
 			  '</div>'+
 			  '<div class="modal-body"></div>'+
 			  '<div id="pagenation" class="pagination"></div>'+
 			  '<div class="modal-footer">'+
-			  '<a class="btn close-modal">閉じる</a>'+
+			  '<a class="btn close-modal">Close</a>'+
 			  '</div></div>');
 
 			self.overlay = $('#overlay');
@@ -66,29 +64,28 @@
 			this.loadContents(self.opts.loadFile);
 
 		},
-       closeModal : function() {
-	this.overlay.remove();  
-	this.modal.remove();
-	//挿入イベント削除
-	$('a.insert').die();
-	$('div.pagination a').die();
-		  
-        },
-        //メディアコンテンツを読み込み
-        loadContents : function(url) {
-            url = this.escapeHTML(url);
-            $('.modal-body').load(url + ' #media-list');
+	       closeModal : function() {
+			this.overlay.remove();  
+			this.modal.remove();
+			//挿入イベント削除
+			$('a.insert').die();
+			$('div.pagination a').die();
+	        },
+	        //メディアコンテンツを読み込み
+	        loadContents : function(url) {
+	            url = this.escapeHTML(url);
+	            $('.modal-body').load(url + ' #media-list');
 
-        },
-        //htmlエスケープ
-        escapeHTML : function(val) {
-            return $("<div/>").text(val).html();
-        },
+	        },
+	        //htmlエスケープ
+	        escapeHTML : function(val) {
+	            return $("<div/>").text(val).html();
+	        },
 	   
 		//挿入ボタンで挿入
 		insertClick: function(thisEle) {
 			var self = this;
-
+			
 			var parent = thisEle.parent().parent();
 			//画像URL取得
 			var getUrl = $('td:eq(3) a', parent).attr('href');
